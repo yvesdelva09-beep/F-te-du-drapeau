@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Clock - Multiple Time Zones</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Arial', sans-serif;
+            padding: 20px;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            max-width: 1200px;
+            width: 100%;
+        }
+
+        h1 {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .clocks-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .clock-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .clock-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .timezone-name {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .digital-time {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #333;
+            font-family: 'Courier New', monospace;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
+
+        .time-details {
+            font-size: 0.9em;
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .date-display {
+            font-weight: bold;
+            color: #764ba2;
+            margin-top: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 1.8em;
+                margin-bottom: 20px;
+            }
+
+            .clocks-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .digital-time {
+                font-size: 2em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🌍 World Clock</h1>
+        <div class="clocks-grid" id="clocksContainer"></div>
+    </div>
+
+    <script>
+        // Define time zones
+        const timeZones = [
+            { name: 'New York', tz: 'America/New_York' },
+            { name: 'London', tz: 'Europe/London' },
+            { name: 'Paris', tz: 'Europe/Paris' },
+            { name: 'Tokyo', tz: 'Asia/Tokyo' },
+            { name: 'Sydney', tz: 'Australia/Sydney' },
+            { name: 'Dubai', tz: 'Asia/Dubai' },
+            { name: 'Singapore', tz: 'Asia/Singapore' },
+            { name: 'Hong Kong', tz: 'Asia/Hong_Kong' },
+            { name: 'Toronto', tz: 'America/Toronto' },
+            { name: 'São Paulo', tz: 'America/Sao_Paulo' },
+            { name: 'Moscow', tz: 'Europe/Moscow' },
+            { name: 'Mumbai', tz: 'Asia/Kolkata' }
+        ];
+
+        function formatTime(date) {
+            return date.toLocaleTimeString('en-US', { 
+                hour12: false,
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            });
+        }
+
+        function formatDate(date) {
+            return date.toLocaleDateString('en-US', {
+                weekday: 'short',
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric'
+            });
+        }
+
+        function createClockCard(timezone) {
+            const card = document.createElement('div');
+            card.className = 'clock-card';
+            card.id = `clock-${timezone.tz}`;
+            card.innerHTML = `
+                <div class="timezone-name">${timezone.name}</div>
+                <div class="digital-time" id="time-${timezone.tz}">--:--:--</div>
+                <div class="time-details">
+                    <div class="date-display" id="date-${timezone.tz}">Loading...</div>
+                    <div id="utc-${timezone.tz}">UTC Offset: --</div>
+                </div>
+            `;
+            return card;
+        }
+
+        function updateClock(timezone) {
+            const date = new Date().toLocaleString('en-US', { 
+                timeZone: timezone.tz 
+            });
+            const localDate = new Date(date);
+
+            // Update time
+            const timeElement = document.getElementById(`time-${timezone.tz}`);
+            if (timeElement) {
+                timeElement.textContent = formatTime(localDate);
+            }
+
+            // Update date
+            const dateElement = document.getElementById(`date-${timezone.tz}`);
+            if (dateElement) {
+                dateElement.textContent = formatDate(localDate);
+            }
+
+            // Update UTC offset
+            const utcElement = document.getElementById(`utc-${timezone.tz}`);
+            if (utcElement) {
+                const offset = new Date().toLocaleString('en-US', { 
+                    timeZone: timezone.tz,
+                    timeZoneName: 'shortOffset'
+                }).split(' ')[2];
+                utcElement.textContent = `UTC: ${offset || 'Loading...'}`;
+            }
+        }
+
+        function initializeClocks() {
+            const container = document.getElementById('clocksContainer');
+            
+            // Create clock cards
+            timeZones.forEach(timezone => {
+                const card = createClockCard(timezone);
+                container.appendChild(card);
+            });
+
+            // Update all clocks immediately
+            timeZones.forEach(timezone => updateClock(timezone));
+
+            // Update clocks every second
+            setInterval(() => {
+                timeZones.forEach(timezone => updateClock(timezone));
+            }, 1000);
+        }
+
+        // Start when page loads
+        window.addEventListener('DOMContentLoaded', initializeClocks);
+    </script>
+</body>
+</html>
