@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fête du Drapeau Haïtien — 16 Mai 2026 · Bangui</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+      background: #1a1a2e;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 24px 16px 48px;
+    }
+
+    .flyer {
+      max-width: 420px;
+      width: 100%;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 30px rgba(0,0,0,0.4);
+    }
+
+    /* ── COVER ── */
+    .cover {
+      background: #0D1B4B;
+      padding: 36px 28px 0;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .cover-dots {
+      position: absolute; inset: 0;
+      background-image: radial-gradient(circle, rgba(255,255,255,0.055) 1px, transparent 1px);
+      background-size: 18px 18px;
+      pointer-events: none;
+    }
+
+    .flag-row {
+      display: flex; justify-content: center; align-items: center;
+      gap: 10px; margin-bottom: 20px; position: relative; z-index: 1;
+    }
+    .flag-img { width: 160px; height: 96px; border-radius: 6px; object-fit: cover; }
+    .coat-circle {
+      width: 38px; height: 38px; background: #fff;
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      border: 2px solid rgba(255,255,255,0.4);
+      flex-shrink: 0;
+    }
+
+    .cover-eyebrow { font-size: 11px; letter-spacing: 0.14em; color: rgba(255,255,255,0.55); text-transform: uppercase; margin-bottom: 8px; position: relative; z-index:1; }
+    .cover-title { font-size: 26px; font-weight: 800; color: #fff; line-height: 1.2; margin-bottom: 4px; position: relative; z-index:1; letter-spacing: 0.01em; }
+    .cover-title span { color: #fff; }
+    .cover-sub { font-size: 13px; color: #FFD700; font-weight: 600; letter-spacing: 0.07em; font-style: italic; position: relative; z-index:1; margin-bottom: 22px; }
+
+    .cover-divider { display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 18px; position: relative; z-index:1; }
+    .cover-divider-line { flex: 1; max-width: 50px; height: 1px; background: rgba(255,255,255,0.2); }
+    .cover-divider-star { color: #FFD700; font-size: 14px; line-height: 1; }
+
+    .cover-meta { font-size: 13px; color: rgba(255,255,255,0.8); line-height: 2; position: relative; z-index:1; margin-bottom: 22px; }
+    .cover-meta strong { color: #fff; font-weight: 700; display: block; }
+
+    .cover-tags { display: flex; justify-content: center; gap: 7px; flex-wrap: wrap; position: relative; z-index:1; margin-bottom: 0; }
+    .tag { font-size: 11px; padding: 4px 14px; border-radius: 20px; font-weight: 700; border: 1.5px solid; }
+    .tag-gold  { color: #FFD700; border-color: #FFD700; }
+    .tag-red   { background: #C8102E; color: #fff; border-color: #C8102E; }
+    .tag-white { color: rgba(255,255,255,0.8); border-color: rgba(255,255,255,0.3); }
+
+    .cover-stripe {
+      margin-top: 22px;
+      height: 8px;
+      display: flex;
+    }
+    .stripe-blue { flex: 1; background: #162460; }
+    .stripe-red  { flex: 1; background: #C8102E; }
+
+    /* ── SECTION HEADER ── */
+    .section-header {
+      background: #C8102E; color: #fff;
+      padding: 11px 22px;
+      font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
+      display: flex; align-items: center; gap: 8px; font-weight: 800;
+    }
+
+    /* ── PROGRAMME ── */
+    .prog-list { background: #fff; }
+
+    .prog-item {
+      padding: 15px 22px;
+      border-bottom: 0.5px solid #f0f0f0;
+      display: flex; gap: 14px; align-items: flex-start;
+    }
+    .prog-item:last-child { border-bottom: none; }
+
+    .prog-time-col { min-width: 46px; text-align: right; flex-shrink: 0; }
+    .prog-time { font-size: 13px; font-weight: 800; color: #0D1B4B; display: block; }
+    .prog-dur  { font-size: 10px; color: #ccc; display: block; margin-top: 2px; }
+
+    .prog-bar { width: 3px; border-radius: 2px; min-height: 52px; flex-shrink: 0; position: relative; margin-top: 4px; background: #eee; }
+    .prog-bar-dot { width: 9px; height: 9px; border-radius: 50%; position: absolute; top: 4px; left: -3px; }
+
+    .prog-content { flex: 1; min-width: 0; }
+    .prog-name { font-size: 14px; font-weight: 700; color: #111; margin-bottom: 4px; }
+    .prog-desc { font-size: 12px; color: #666; line-height: 1.55; margin-bottom: 7px; }
+
+    .prog-badge {
+      display: inline-flex; align-items: center; gap: 5px;
+      border-radius: 20px; padding: 3px 11px; font-size: 11px; font-weight: 700;
+    }
+    .prog-badge svg { width: 12px; height: 12px; flex-shrink: 0; }
+
+    /* Variants */
+    .v-blue .prog-bar-dot  { background: #0D1B4B; }
+    .v-blue .prog-badge    { background: #EEF0F8; color: #0D1B4B; }
+
+    .v-red .prog-bar-dot   { background: #C8102E; }
+    .v-red .prog-time      { color: #C8102E; }
+    .v-red .prog-badge     { background: #FEF0F2; color: #C8102E; }
+
+    .v-gold .prog-bar-dot  { background: #B8860B; }
+    .v-gold .prog-time     { color: #B8860B; }
+    .v-gold .prog-badge    { background: #FDF8E1; color: #7A5800; }
+
+    .v-green .prog-bar-dot { background: #2A6B18; }
+    .v-green .prog-time    { color: #2A6B18; }
+    .v-green .prog-badge   { background: #EDF7E8; color: #1A4A0A; }
+
+    /* ── BACK COVER ── */
+    .back-cover { background: #0D1B4B; padding: 26px 22px 30px; }
+
+    .back-title {
+      font-size: 11px; font-weight: 800; color: #FFD700;
+      margin-bottom: 18px; letter-spacing: 0.12em; text-transform: uppercase;
+      display: flex; align-items: center; gap: 8px;
+    }
+
+    .info-row { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 13px; }
+    .info-row svg { width: 15px; height: 15px; flex-shrink: 0; margin-top: 2px; }
+    .info-text { font-size: 12px; color: rgba(255,255,255,0.7); line-height: 1.6; }
+    .info-text strong { color: #fff; font-weight: 700; display: block; margin-bottom: 1px; }
+
+    .info-box {
+      margin-top: 20px; padding: 14px 16px;
+      background: rgba(255,255,255,0.07);
+      border-radius: 8px;
+      border-left: 3px solid #FFD700;
+    }
+    .info-box-title { font-size: 11px; letter-spacing: 0.08em; color: #FFD700; font-weight: 700; margin-bottom: 6px; text-transform: uppercase; }
+    .info-box-text  { font-size: 11px; color: rgba(255,255,255,0.65); line-height: 1.7; }
+
+    /* ── FOOTER ── */
+    .footer-strip {
+      background: #C8102E; padding: 15px 22px;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .footer-text { font-size: 12px; color: #fff; font-weight: 700; line-height: 1.6; }
+    .footer-text span { font-weight: 400; font-size: 10px; opacity: 0.8; display: block; }
+    .footer-stars { color: #FFD700; font-size: 18px; letter-spacing: 4px; }
+
+    .page-label {
+      font-size: 10px; letter-spacing: 0.08em;
+      color: rgba(255,255,255,0.25);
+      text-align: center; padding: 7px 0 2px;
+      text-transform: uppercase;
+      background: #0D1B4B;
+    }
+    .page-label-light {
+      font-size: 10px; letter-spacing: 0.08em; color: #bbb;
+      text-align: center; padding: 7px 0 2px;
+      text-transform: uppercase;
+      background: #fff;
+    }
+  </style>
+</head>
+<body>
+
+<div class="flyer">
+
+  <!-- ══ COUVERTURE ══ -->
+  <div class="page-label">Couverture</div>
+
+  <div class="cover">
+    <div class="cover-dots"></div>
+
+    <div class="flag-row">
+      <img class="flag-img" src="data:image/jpeg;base64,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" alt="Drapeau haïtien">
+    </div>
+
+    <div class="cover-eyebrow">Communauté haïtienne en RCA</div>
+    <div class="cover-title">Fête du <span>Drapeau</span><br>Haïtien</div>
+    <div class="cover-sub">L'union fait la force</div>
+
+    <div class="cover-divider">
+      <div class="cover-divider-line"></div>
+      <span class="cover-divider-star">★</span>
+      <div class="cover-divider-line"></div>
+    </div>
+
+    <div class="cover-meta">
+      <strong>Samedi 16 mai 2026</strong>
+      À partir de 17h00<br>
+      <strong>Bangui, République Centrafricaine</strong>
+    </div>
+
+    <div class="cover-tags">
+      <span class="tag tag-gold">Culture</span>
+      <span class="tag tag-red">Danse</span>
+      <span class="tag tag-white">Histoire</span>
+      <span class="tag tag-gold">Dîner</span>
+    </div>
+
+    <div class="cover-stripe">
+      <div class="stripe-blue"></div>
+      <div class="stripe-red"></div>
+    </div>
+  </div>
+
+  <!-- ══ PROGRAMME ══ -->
+  <div class="page-label-light">Programme</div>
+
+  <div class="section-header">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px;"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+    Programme de la soirée
+  </div>
+
+  <div class="prog-list">
+
+    <div class="prog-item v-blue">
+      <div class="prog-time-col"><span class="prog-time">17h00</span><span class="prog-dur">50 min</span></div>
+      <div class="prog-bar"><div class="prog-bar-dot"></div></div>
+      <div class="prog-content">
+        <div class="prog-name">Accueil des invités</div>
+        <div class="prog-desc">Réception chaleureuse des invités. Moment de retrouvailles et de convivialité avant le début officiel de la soirée.</div>
+        <span class="prog-badge">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          Réception
+        </span>
+      </div>
+    </div>
+
+    <div class="prog-item v-blue">
+      <div class="prog-time-col"><span class="prog-time">18h00</span><span class="prog-dur">10 min</span></div>
+      <div class="prog-bar"><div class="prog-bar-dot"></div></div>
+      <div class="prog-content">
+        <div class="prog-name">Ouverture / Mots de Bienvenue</div>
+        <div class="prog-desc">Allocution d'ouverture officielle par les représentants de la communauté haïtienne en RCA, souhaitant la bienvenue aux invités de tous horizons.</div>
+        <span class="prog-badge">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+          Allocution
+        </span>
+      </div>
+    </div>
+
+    <div class="prog-item v-blue">
+      <div class="prog-time-col"><span class="prog-time">18h10</span><span class="prog-dur">5 min</span></div>
+      <div class="prog-bar"><div class="prog-bar-dot"></div></div>
+      <div class="prog-content">
+        <div class="prog-name">Hymne national</div>
+        <div class="prog-desc">Interprétation solennelle de « La Dessalinienne », hymne national de la République d'Haïti. Un moment de fierté et de recueillement collectif.</div>
+        <span class="prog-badge">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+          Cérémonie
+        </span>
+      </div>
+    </div>
+
+    <div class="prog-item v-red">
+      <div class="prog-time-col"><span class="prog-time">18h15</span><span class="prog-dur">20 min</span></div>
+      <div class="prog-bar"><div class="prog-bar-dot"></div></div>
+      <div class="prog-content">
+        <div class="prog-name">Historique et symbolisme du drapeau</div>
+        <div class="prog-desc">Projection retraçant les origines et le symbolisme du drapeau haïtien, son rôle dans le mythe fondateur et la lutte pour l'indépendance.</div>
+        <span class="prog-badge">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+          Projection
+        </span>
+      </div>
+    </div>
+
+    <div class="prog-item v-gold">
+      <div class="prog-time-col"><span class="prog-time">18h35</span><span class="prog-dur">25 min</span></div>
+      <div class="prog-bar"><div class="prog-bar-dot"></div></div>
+      <div class="prog-content">
+        <div class="prog-name">Danse : Folklore d'Haïti / Traditionnelle de RCA</div>
+        <div class="prog-desc">Tableau mêlant folklore haïtien et danses traditionnelles centrafricaines, interprétées par une troupe professionnelle invitée — un dialogue artistique entre les deux cultures.</div>
+        <span class="prog-badge">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          Spectacle interculturel
+        </span>
+      </div>
+    </div>
+
+    <div class="prog-item v-blue">
+      <div class="prog-time-col"><span class="prog-time">19h00</span><span class="prog-dur">5 min</span></div>
+      <div class="prog-bar"><div class="prog-bar-dot"></div></div>
+      <div class="prog-content">
+        <div class="prog-name">Mots de circonstance</div>
+        <div class="prog-desc">Discours solennel soulignant la signification de la Fête du Drapeau et les liens entre la diaspora haïtienne et la communauté centrafricaine.</div>
+        <span class="prog-badge">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          Discours
+        </span>
+      </div>
+    </div>
+
+    <div class="prog-item v-green">
+      <div class="prog-time-col"><span class="prog-time">19h10</span><span class="prog-dur">15 min</span></div>
+      <div class="prog-bar"><div class="prog-bar-dot"></div></div>
+      <div class="prog-content">
+        <div class="prog-name">Tambour : rythme d'Haïti</div>
+        <div class="prog-desc">Voyage au cœur des rythmes d'Haïti. Le tambour a une place privilégiée dans l'histoire et la culture haïtienne.</div>
+        <span class="prog-badge">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 12h8M12 8v8"/></svg>
+          Percussion
+        </span>
+      </div>
+    </div>
+
+    <div class="prog-item v-red">
+      <div class="prog-time-col"><span class="prog-time">19h20</span><span class="prog-dur"></span></div>
+      <div class="prog-bar"><div class="prog-bar-dot"></div></div>
+      <div class="prog-content">
+        <div class="prog-name">Mots de remerciement · Dîner · Danse</div>
+        <div class="prog-desc">Clôture officielle suivie d'un dîner convivial et d'une soirée dansante pour célébrer ensemble la culture et la fierté haïtiennes jusqu'en fin de soirée.</div>
+        <span class="prog-badge">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>
+          Soirée libre
+        </span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ══ INFORMATIONS PRATIQUES ══ -->
+  <div class="page-label">Informations pratiques</div>
+
+  <div class="back-cover">
+    <div class="back-title">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#FFD700" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px;"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      Informations pratiques
+    </div>
+
+    <div class="info-row">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#FFD700" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+      <div class="info-text">
+        <strong>Date et heure</strong>
+        Samedi 16 mai 2026 — dès 17h00
+      </div>
+    </div>
+
+    <div class="info-row">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#FFD700" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+      <div class="info-text">
+        <strong>Lieu</strong>
+        202, Rue Emil Gentil<br>
+        Derrière Maison Russe, Bangui — RCA
+      </div>
+    </div>
+
+    <div class="info-row">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#FFD700" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.38 3.46L16 2a4 4 0 01-8 0L3.62 3.46a2 2 0 00-1.34 2.23l.58 3.57a1 1 0 00.99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 002-2V10h2.15a1 1 0 00.99-.84l.58-3.57a2 2 0 00-1.34-2.23z"/></svg>
+      <div class="info-text">
+        <strong>Tenue recommandée</strong>
+        Tenue soignée — couleurs nationales bienvenues
+      </div>
+    </div>
+
+    <div class="info-row">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#FFD700" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+      <div class="info-text">
+        <strong>Organisé par</strong>
+        Communauté haïtienne en RCA
+      </div>
+    </div>
+
+    <div class="info-box">
+      <div class="info-box-title">À propos du 18 mai</div>
+      <div class="info-box-text">Le 18 mai est la date officielle de commémoration du drapeau haïtien. Dans le mythe fondateur de la République d'Haïti, c'est à Arcahaie, lors du Congrès de 1803, que Catherine Flon aurait cousu les couleurs bleu et rouge — symbole d'unité entre les peuples et d'une indépendance en marche.</div>
+    </div>
+  </div>
+
+  <!-- ══ FOOTER ══ -->
+  <div class="footer-strip">
+    <div class="footer-text">
+      Fête du Drapeau Haïtien
+      <span>16 · 05 · 2026 · Bangui, RCA</span>
+    </div>
+    <div class="footer-stars">★ ★</div>
+  </div>
+
+</div>
+</body>
+</html>
